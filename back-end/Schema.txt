@@ -32,6 +32,9 @@ value ("IT", "Amol Jain", 9999999999);
 
 INSERT INTO Student (role, fname, lname, email, password, city, contact) value (1, "Sharvari", "Shinde", "sharvari@gmail.com", "sharvari", "Pune", 888888888);
 
+DELETE FROM Student WHERE id = 4;
+
+UPDATE Student SET fname = "Vicky", email = 'mary.hill@classicmodelcars.com' WHERE id = 3;
 
 INSERT INTO DepartmentStudent (StudId, DeptId)
 value (1, 3);
