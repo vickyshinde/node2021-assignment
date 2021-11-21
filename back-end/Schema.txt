@@ -18,31 +18,70 @@ CREATE TABLE Student (
   PRIMARY KEY (id)
 );
 
+ALTER TABLE Student
+ADD userType int NOT NULL;
+
+user = 0
+admin = 1
+
 CREATE TABLE DepartmentStudent (
   id int NOT NULL AUTO_INCREMENT,
   StudId int,
   DeptId int,
-  FOREIGN KEY (StudId) REFERENCES Student(id),
-  FOREIGN KEY (DeptId) REFERENCES Department(id),
+  FOREIGN KEY (StudId)
+    REFERENCES Student(id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (DeptId)
+    REFERENCES Department(id)
+    ON DELETE CASCADE,
   PRIMARY KEY (id)
 );
 
 INSERT INTO Department (name, hod, contact)
-value ("IT", "Amol Jain", 9999999999);
+value ("IT", "Amol Jain", 999999999);
 
-INSERT INTO Student (role, fname, lname, email, password, city, contact) value (1, "Sharvari", "Shinde", "sharvari@gmail.com", "sharvari", "Pune", 888888888);
+INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (1, "Sharvari", "Shinde", "sharvari@gmail.com", "sharvari", "Pune", 888888888, 0); SET @Student_id = LAST_INSERT_ID(); INSERT INTO DepartmentStudent (StudId, DeptId)  VALUES(@Student_id, 2);
+
+
 
 DELETE FROM Student WHERE id = 4;
 
 UPDATE Student SET fname = "Vicky", email = 'mary.hill@classicmodelcars.com' WHERE id = 3;
 
-INSERT INTO DepartmentStudent (StudId, DeptId)
-value (1, 3);
+INSERT INTO DepartmentStudent (StudId, DeptId) value (1, 3);
 
 SELECT
-    `Student`.*
+    *
 FROM
-    `Student`
-    JOIN `DepartmentStudent` ON `Student`.`id` = `DepartmentStudent`.`StudId`
-WHERE
-    `DepartmentStudent`.`DeptId` = 1;
+    Student
+INNER JOIN DepartmentStudent
+  ON Student.id = DepartmentStudent.StudId
+INNER JOIN Department
+  ON DepartmentStudent.DeptId = Department.id
+
+
+SELECT
+    Student.fname, Department.name
+FROM
+    Student
+INNER JOIN DepartmentStudent
+  ON Student.id = DepartmentStudent.StudId
+INNER JOIN Department
+  ON DepartmentStudent.DeptId = Department.id
+
+SELECT
+  Student.id, Student.role, Student.id, Student.lname, Student.email, Student.password, Student.city, Student.contact, DepartmentStudent.DeptId AS DeptId, Department.name AS Deptname
+FROM Student
+JOIN DepartmentStudent
+  ON (Student.id=DepartmentStudent.StudId)
+JOIN Department
+  ON (Department.id=DepartmentStudent.DeptId);
+
+SELECT
+  Student.id, Student.role, DepartmentStudent.StudId AS StudId, Student.lname, Student.email, Student.password, Student.city, Student.contact, DepartmentStudent.DeptId AS DeptId, Department.name AS Deptname
+FROM Student
+JOIN DepartmentStudent
+  ON (Student.id=DepartmentStudent.StudId)
+JOIN Department
+  ON (Department.id=DepartmentStudent.DeptId)
+  WHERE StudId =1;
