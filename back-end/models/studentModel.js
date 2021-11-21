@@ -23,13 +23,13 @@ class StudentModel {
   static updateById(id, student) {
     console.log(id);
     console.log(student);
-    const { role, fname, lname, email, password, city, contact } = student;
-    let sql = `UPDATE Student SET role = '${role}', fname = '${fname}', lname = '${lname}', email = '${email}', password = '${password}', city = '${city}', contact = ${contact} WHERE id = ${id};`;
+    const { role, fname, lname, email, password, city, contact, userType } = student;
+    let sql = `UPDATE Student SET role = '${role}', fname = '${fname}', lname = '${lname}', email = '${email}', password = '${password}', city = '${city}', contact = ${contact}, userType = ${userType} WHERE id = ${id};`;
     return db.execute(sql);
   }
 
   static postNewStudent(student) {
-    console.log(student);
+    console.log(student);role;
     const { role, fname, lname, email, password, city, contact, userType, DeptId, Deptname } = student;
     // let sql = `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (${role}, '${fname}', '${lname}', '${email}', '${password}', '${city}', ${contact}, 0); SET @Student_id = LAST_INSERT_ID(); INSERT INTO DepartmentStudent (StudId, DeptId) VALUES(@Student_id, ${DeptId});`;
     let sql = `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (${role}, '${fname}', '${lname}', '${email}', '${password}', '${city}', ${contact}, 0); SET @Student_id = LAST_INSERT_ID(); INSERT INTO DepartmentStudent (StudId, DeptId) VALUES(@Student_id, ${DeptId});`;
