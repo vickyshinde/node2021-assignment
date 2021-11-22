@@ -36,8 +36,8 @@ const StudentListing = () => {
       <Banner title="Student Listing" />
       <div className="container">
         <div>
-          <NavLink exact className="btn btn-primary mb-4" to="/student-add">
-            Add Student
+          <NavLink exact className="btn btn-outline-danger mb-4" to="/student-add">
+            Create Student
           </NavLink>
         </div>
         {loading ? (
@@ -45,16 +45,18 @@ const StudentListing = () => {
         ) : (
           <table className="table table-bordered">
             <thead>
-              <tr>
+              <tr className="table-info">
                 <th scope="col">Sid</th>
+                <th scope="col">Deptname</th>
                 <th scope="col">Role No</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Password</th>
                 <th scope="col">City</th>
                 <th scope="col">Contact</th>
-                <th scope="col">Deptname</th>
-                <th scope="col">Action</th>
+                <th scope="col" className="text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +64,7 @@ const StudentListing = () => {
                 return (
                   <tr key={item.id}>
                     <th scope="row">{item.id}</th>
+                    <td>{item.Deptname}</td>
                     <th scope="row">{item.role}</th>
                     <td>
                       {item.fname} {item.lname}
@@ -70,20 +73,19 @@ const StudentListing = () => {
                     <td>{item.password}</td>
                     <td>{item.city}</td>
                     <td>{item.contact}</td>
-                    <td>{item.Deptname}</td>
-                    <td>
+                    <td className="text-right">
                       <SubmitButtonWrapped
                         // disabled={!isDisabled}
-                        title="Edit"
-                        clsName="btn btn-warning btn-sm ml-1"
+                        title="Update"
+                        clsName="btn btn-outline-success btn-sm ml-1"
                         onClick={() => {
                           history.push(`/user-edit/${item.id}`);
                         }}
                       />
                       <SubmitButtonWrapped
                         // disabled={!isDisabled}
-                        title="X"
-                        clsName="btn btn-danger btn-sm ml-1"
+                        title="Delete"
+                        clsName="btn btn-outline-warning btn-sm ml-1"
                         onClick={() => handleDelete(item.id)}
                       />
                     </td>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const Banner = ({ title, slogan }) => {
   return (
     <section className="jumbotron text-center">
-      <h1 className="jumbotron-heading">{title}</h1>
+      <h3 className="jumbotron-heading">{title}</h3>
     </section>
   );
 };
