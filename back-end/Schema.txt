@@ -40,7 +40,10 @@ CREATE TABLE DepartmentStudent (
 INSERT INTO Department (name, hod, contact)
 value ("IT", "Amol Jain", 999999999);
 
-INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (1, "Sharvari", "Shinde", "sharvari@gmail.com", "sharvari", "Pune", 888888888, 0); SET @Student_id = LAST_INSERT_ID(); INSERT INTO DepartmentStudent (StudId, DeptId)  VALUES(@Student_id, 2);
+INSERT INTO
+  Student (role, fname, lname, email, password, city, contact, userType) value (1, "Sharvari", "Shinde", "sharvari@gmail.com", "sharvari", "Pune", 888888888, 0);
+  SET @Student_id = LAST_INSERT_ID();
+  INSERT INTO DepartmentStudent (StudId, DeptId)  VALUES(@Student_id, 2);
 
 
 
@@ -85,3 +88,34 @@ JOIN DepartmentStudent
 JOIN Department
   ON (Department.id=DepartmentStudent.DeptId)
   WHERE StudId =1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* db.query(
+  `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (?,?,?,?,?,?,?,?)`,
+  [role, fname, lname, email, password, city, contact, userType],
+  (error, results, fields) => {
+    if (error) throw error;
+    console.log(results);
+    console.log(results.insertId);
+    console.log('changed ' + results.changedRows + ' rows');
+    console.log('connected as id ' + connection.threadId);
+  }
+  ); */
