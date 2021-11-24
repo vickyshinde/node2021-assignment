@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class UserInputErrorBoundary extends React.Component {
   constructor(props) {
@@ -38,51 +38,58 @@ const UserInputWrapped = (props) => {
   );
 };
 
-const UserInput = ({
-  label,
-  id,
-  name,
-  type,
-  clsName,
-  placeholder,
-  errorMsg,
-  isValid,
-  onChange,
-  val,
-}) => {
+const UserInput = ({ label, id, name, type, clsName, placeholder, errorMsg, isValid, onChange, val }) => {
   // useEffect(() => {
   //   throw new Error();
   // }, []);
   return (
-    <div className="form-group">
-      {label &&
-        <label htmlFor={id}>{label}</label>
-      }
-      <input
-        type={type}
-        className={clsName}
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        autoComplete="off"
-        value={val}
-        onChange={(event) => {
-          onChange(event.target.value);
-        }}
-      />
-      {isValid && <small className="form-text text-danger">{errorMsg}</small>}
+    <div className="form-group row">
+      {label && (
+        <label className="col-sm-3 col-form-label" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <div className="col-sm-9">
+        {type === 'select' ? (
+          <select
+            className={`${clsName} ${isValid ? 'is-invalid' : ''}`}
+            id={id}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}>
+            <option defaultValue>{placeholder}</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        ) : (
+          <input
+            type={type}
+            className={`${clsName} ${isValid ? 'is-invalid' : ''}`}
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            autoComplete="off"
+            value={val}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
+          />
+        )}
+        {isValid && <small className="invalid-feedback">{errorMsg}</small>}
+      </div>
     </div>
   );
 };
 
 UserInput.defaultProps = {
-  id: "",
-  name: "",
-  label: "Input",
-  type: "text",
-  clsName: "inputClass",
-  placeholder: "placeholder",
-  value: "",
+  id: '',
+  name: '',
+  label: 'Input',
+  type: 'text',
+  clsName: 'inputClass',
+  placeholder: 'placeholder',
+  value: '',
   onChange: () => {},
 };
 

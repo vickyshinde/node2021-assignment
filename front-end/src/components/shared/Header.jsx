@@ -1,9 +1,6 @@
-import { useLocation } from 'react-router-dom';
-
 import { NavLink } from 'react-router-dom';
 
 const Header = () => {
-  const location = useLocation();
   return (
     <nav className="navbar navbar-expand navbar-dark bg-primary">
       <div className="container">
@@ -21,6 +18,11 @@ const Header = () => {
             <li className="nav-item">
               <NavLink exact to="/student-listing" className="nav-link" activeClassName="text-white">
                 Student Listing
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink exact to="/student-create" className="nav-link" activeClassName="text-white">
+                Student Create
               </NavLink>
             </li>
             <li className="nav-item">

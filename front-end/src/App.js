@@ -6,7 +6,7 @@ import HomeWrapped from './components/Home';
 // import SignupWrapped from './components/Signup';
 // import DashboardWrapped from './components/Dashboard';
 import StudentListing from './components/StudentListing';
-import StudentAdd from './components/StudentAdd';
+import StudentCreate from './components/StudentCreate';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
             <Route path="/signup" component={SignupWrapped} />
             <Route path="/dashboard" component={DashboardWrapped} />*/}
           <Route path="/student-listing" component={StudentListing} />
-          <Route path="/student-add" component={StudentAdd} />
+          <Route path="/student-create" component={StudentCreate} />
           <Redirect to="/" />
         </Switch>
       </div>
