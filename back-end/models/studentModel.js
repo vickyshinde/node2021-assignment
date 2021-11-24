@@ -1,4 +1,5 @@
 const db = require('../services/db');
+const bcrypt = require('bcryptjs');
 
 class StudentModel {
   static getAll() {
@@ -40,7 +41,8 @@ class StudentModel {
   static async postNewStudent(student) {
     // console.log(student);
     const { role, fname, lname, email, password, city, contact, userType, DeptId, Deptname } = student;
-    let sql = `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (${role}, '${fname}', '${lname}', '${email}', '${password}', '${city}', ${contact}, 0);`;
+    const hashPass = await bcrypt.hash(password, 12);
+    let sql = `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (${role}, '${fname}', '${lname}', '${email}', '${hashPass}', '${city}', ${contact}, 0);`;
     let [result] = await db.execute(sql);
     const insertId = result.insertId;
     console.log(insertId);
