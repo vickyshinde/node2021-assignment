@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const studentsApi = '/api/students';
+const loginApi = '/api/students/login';
 
 export const getStudents = async (id) => {
   id = id || '';
@@ -17,4 +18,8 @@ export const editUser = async (id, student) => {
 
 export const deleteStudent = async (id) => {
   return await axios.delete(`${studentsApi}/${id}`);
+};
+
+export const loginStudent = async (student) => {
+  return await axios.post(loginApi, student);
 };
