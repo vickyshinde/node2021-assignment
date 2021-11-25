@@ -12,7 +12,7 @@ export const addStudent = async (student) => {
   return await axios.post(studentsApi, student);
 };
 
-export const editUser = async (id, student) => {
+export const updateStudent = async (id, student) => {
   return await axios.put(`${studentsApi}/${id}`, student);
 };
 

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router';
-import { addStudent } from '../config/api-endpoints';
+import { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router';
+import { addStudent, getStudents, updateStudent } from '../config/api-endpoints';
 import Banner from './shared/Banner';
 import SubmitButtonWrapped from './shared/SubmitButton';
 import UserInputWrapped from './shared/UserInput';
@@ -16,8 +16,10 @@ const initialValues = {
   DeptId: '',
 };
 
-const StudentCreate = () => {
+const StudentUpdate = () => {
   const history = useHistory();
+
+  const { id } = useParams();
 
   const [studentObj, setStudentObj] = useState(initialValues);
 
@@ -47,7 +49,17 @@ const StudentCreate = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
-  console.log(isDisabled);
+  useEffect(() => {
+    const loadUserData = async () => {
+      console.log(id);
+      const response = await getStudents(id);
+      setStudentObj(response.data[0]);
+      console.log(response.data[0]);
+      console.log(studentObj);
+    };
+    loadUserData();
+  }, [id]);
+
   const onFirstNameChange = (fname) => {
     if (fname.length < 4) {
       setIsInputValid({
@@ -215,8 +227,8 @@ const StudentCreate = () => {
     });
   };
 
-  const addStudentDetails = async () => {
-    await addStudent(studentObj);
+  const updateStudentDetails = async () => {
+    await updateStudent(id, studentObj);
   };
 
   const onSubmitClick = (e) => {
@@ -232,7 +244,7 @@ const StudentCreate = () => {
         ...isInputValid,
         isDeptIdValid: false,
       });
-      addStudentDetails();
+      updateStudentDetails();
       console.log(studentObj);
       // history.push('/user-listing');
     }
@@ -383,4 +395,4 @@ const StudentCreate = () => {
   );
 };
 
-export default StudentCreate;
+export default StudentUpdate;

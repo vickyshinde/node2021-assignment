@@ -51,7 +51,9 @@ const StudentListing = () => {
                 <th scope="col">Role No</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Password</th>
+                <th className="d-none" scope="col">
+                  Password
+                </th>
                 <th scope="col">City</th>
                 <th scope="col">Contact</th>
                 <th scope="col" className="text-right">
@@ -70,7 +72,7 @@ const StudentListing = () => {
                       {item.fname} {item.lname}
                     </td>
                     <td>{item.email}</td>
-                    <td>{item.password}</td>
+                    <td className="d-none">{item.password}</td>
                     <td>{item.city}</td>
                     <td>{item.contact}</td>
                     <td className="text-right">
@@ -79,7 +81,7 @@ const StudentListing = () => {
                         title="Update"
                         clsName="btn btn-outline-success btn-sm ml-1"
                         onClick={() => {
-                          history.push(`/user-edit/${item.id}`);
+                          history.push(`/student-update/${item.id}`);
                         }}
                       />
                       <SubmitButtonWrapped
