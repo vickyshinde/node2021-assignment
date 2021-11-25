@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { addStudent } from '../config/api-endpoints';
+import { addStudent, getDepartment } from '../config/api-endpoints';
 import Banner from './shared/Banner';
 import SubmitButtonWrapped from './shared/SubmitButton';
 import UserInputWrapped from './shared/UserInput';
@@ -20,6 +20,7 @@ const StudentCreate = () => {
   const history = useHistory();
 
   const [studentObj, setStudentObj] = useState(initialValues);
+  const [department, setDepartment] = useState([]);
 
   const { fname, lname, role, email, contact, city, password, DeptId } = studentObj;
 
@@ -47,7 +48,16 @@ const StudentCreate = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
-  console.log(isDisabled);
+  const getAllDepartment = async () => {
+    const response = await getDepartment();
+    // console.log(response.data);
+    setDepartment(response.data);
+  };
+
+  useEffect(() => {
+    getAllDepartment();
+  }, []);
+
   const onFirstNameChange = (fname) => {
     if (fname.length < 4) {
       setIsInputValid({
@@ -136,7 +146,7 @@ const StudentCreate = () => {
   };
 
   const onContactChange = (contact) => {
-    if (contact.length < 10) {
+    if (contact.length < 9) {
       setIsInputValid({
         ...isInputValid,
         isContactValid: true,
@@ -234,7 +244,7 @@ const StudentCreate = () => {
       });
       addStudentDetails();
       console.log(studentObj);
-      // history.push('/user-listing');
+      history.push('/student-listing');
     }
   };
   return (
@@ -332,6 +342,7 @@ const StudentCreate = () => {
                 val={password}
               />
               <UserInputWrapped
+                selectList={department}
                 label="Deptname"
                 id="deptname"
                 name="deptname"
@@ -343,22 +354,6 @@ const StudentCreate = () => {
                 onChange={onDeptIdChange}
                 val={DeptId}
               />
-              {/* <div className="form-group row">
-                {true && (
-                  <label className="col-sm-3 col-form-label" htmlFor="deptname">
-                    Deptname
-                  </label>
-                )}
-                <div className="col-sm-9">
-                  <select className="custom-select">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                  {isValid && <small className="invalid-feedback">{errorMsg}</small>}
-                </div>
-              </div> */}
               <div className="row">
                 <div className="offset-3 col-sm-9">
                   <SubmitButtonWrapped

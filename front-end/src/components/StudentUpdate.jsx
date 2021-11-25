@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
-import { addStudent, getStudents, updateStudent } from '../config/api-endpoints';
+import { getDepartment, getStudents, updateStudent } from '../config/api-endpoints';
 import Banner from './shared/Banner';
 import SubmitButtonWrapped from './shared/SubmitButton';
 import UserInputWrapped from './shared/UserInput';
@@ -23,6 +23,8 @@ const StudentUpdate = () => {
 
   const [studentObj, setStudentObj] = useState(initialValues);
 
+  const [department, setDepartment] = useState([]);
+
   const { fname, lname, role, email, contact, city, password, DeptId } = studentObj;
 
   const [isInputValid, setIsInputValid] = useState({
@@ -32,7 +34,7 @@ const StudentUpdate = () => {
     isCityValid: false,
     isEmailValid: false,
     isContactValid: false,
-    isPasswordValid: false,
+    isPasswordValid: true,
     isDeptIdValid: false,
   });
 
@@ -49,13 +51,22 @@ const StudentUpdate = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
 
+  const getAllDepartment = async () => {
+    const response = await getDepartment();
+    // console.log(response.data);
+    setDepartment(response.data);
+  };
+
+  useEffect(() => {
+    getAllDepartment();
+  }, []);
+
   useEffect(() => {
     const loadUserData = async () => {
       console.log(id);
       const response = await getStudents(id);
       setStudentObj(response.data[0]);
       console.log(response.data[0]);
-      console.log(studentObj);
     };
     loadUserData();
   }, [id]);
@@ -148,7 +159,7 @@ const StudentUpdate = () => {
   };
 
   const onContactChange = (contact) => {
-    if (contact.length < 10) {
+    if (contact.length < 9) {
       setIsInputValid({
         ...isInputValid,
         isContactValid: true,
@@ -246,7 +257,7 @@ const StudentUpdate = () => {
       });
       updateStudentDetails();
       console.log(studentObj);
-      // history.push('/user-listing');
+      history.push('/student-listing');
     }
   };
   return (
@@ -331,7 +342,7 @@ const StudentUpdate = () => {
                 onChange={onContactChange}
                 val={contact}
               />
-              <UserInputWrapped
+              {/* <UserInputWrapped
                 label="Password"
                 id="password"
                 name="password"
@@ -342,8 +353,9 @@ const StudentUpdate = () => {
                 isValid={isPasswordValid}
                 onChange={onPasswordChange}
                 val={password}
-              />
+              /> */}
               <UserInputWrapped
+                selectList={department}
                 label="Deptname"
                 id="deptname"
                 name="deptname"
@@ -355,22 +367,6 @@ const StudentUpdate = () => {
                 onChange={onDeptIdChange}
                 val={DeptId}
               />
-              {/* <div className="form-group row">
-                {true && (
-                  <label className="col-sm-3 col-form-label" htmlFor="deptname">
-                    Deptname
-                  </label>
-                )}
-                <div className="col-sm-9">
-                  <select className="custom-select">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                  {isValid && <small className="invalid-feedback">{errorMsg}</small>}
-                </div>
-              </div> */}
               <div className="row">
                 <div className="offset-3 col-sm-9">
                   <SubmitButtonWrapped

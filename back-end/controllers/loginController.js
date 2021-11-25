@@ -1,13 +1,8 @@
+const jwt = require('jsonwebtoken');
 const db = require('../services/db');
 const bcrypt = require('bcryptjs');
 
 exports.login = async (req, res, next) => {
-  // const errors = validationResult(req);
-
-  // if (!errors.isEmpty()) {
-  //   return res.status(422).json({ errors: errors.array() });
-  // }
-
   try {
     const [row] = await db.execute('SELECT * FROM `Student` WHERE `email`=?', [req.body.email]);
 
@@ -25,21 +20,17 @@ exports.login = async (req, res, next) => {
         status: 422,
       });
     } else {
-      res.cookie('mytoken', 'abc', {
-        expires: new Date(Date.now() + 120000),
-        httpOnly: true,
+      const theToken = jwt.sign({ id: row[0].id }, 'the-super-strong-secret-key', { expiresIn: '1h' });
+      res.cookie('token', theToken, {
+        expires: new Date(Date.now() + 12000000),
+        // httpOnly: true,
       });
       return res.json({
+        token: theToken,
         message: 'user signin successfully',
         row,
       });
     }
-
-    // const theToken = jwt.sign({ id: row[0].id }, 'the-super-strong-secrect', { expiresIn: '1h' });
-
-    /* return res.json({
-      row,
-    }) */
   } catch (err) {
     next(err);
   }

@@ -38,10 +38,17 @@ const UserInputWrapped = (props) => {
   );
 };
 
-const UserInput = ({ label, id, name, type, clsName, placeholder, errorMsg, isValid, onChange, val }) => {
+const UserInput = ({ label, id, name, type, clsName, placeholder, errorMsg, isValid, onChange, val, selectList }) => {
   // useEffect(() => {
   //   throw new Error();
   // }, []);
+
+  const selectedVal = selectList.map((item) => {
+    if (val === item.id) {
+      return item.name;
+    }
+    return null;
+  });
   return (
     <div className="form-group row">
       {label && (
@@ -57,10 +64,14 @@ const UserInput = ({ label, id, name, type, clsName, placeholder, errorMsg, isVa
             onChange={(event) => {
               onChange(event.target.value);
             }}>
-            <option defaultValue>{placeholder}</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option defaultValue>{val ? selectedVal : placeholder}</option>
+            {selectList.map((item) => {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              );
+            })}
           </select>
         ) : (
           <input
@@ -91,6 +102,7 @@ UserInput.defaultProps = {
   placeholder: 'placeholder',
   value: '',
   onChange: () => {},
+  selectList: [],
 };
 
 UserInput.propTypes = {
@@ -104,6 +116,7 @@ UserInput.propTypes = {
   isValid: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  selectList: PropTypes.array,
 };
 
 export default UserInputWrapped;

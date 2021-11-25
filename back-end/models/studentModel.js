@@ -31,8 +31,8 @@ class StudentModel {
     console.log(id);
     console.log(student);
     const { role, fname, lname, email, password, city, contact, userType, DeptId, Deptname } = student;
-    const hashPass = await bcrypt.hash(password, 12);
-    let sql = `UPDATE Student SET role = '${role}', fname = '${fname}', lname = '${lname}', email = '${email}', password = '${hashPass}', city = '${city}', contact = ${contact}, userType = 0 WHERE id = ${id};`;
+    // const hashPass = await bcrypt.hash(password, 12);
+    let sql = `UPDATE Student SET role = '${role}', fname = '${fname}', lname = '${lname}', email = '${email}', city = '${city}', contact = ${contact}, userType = 0 WHERE id = ${id};`;
     let result = await db.execute(sql);
     let sql1 = `UPDATE DepartmentStudent SET DeptId = ${DeptId} WHERE StudId = ${id};`;
     await db.execute(sql1);

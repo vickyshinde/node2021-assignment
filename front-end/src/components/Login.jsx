@@ -8,10 +8,10 @@ import UserInputWrapped from './shared/UserInput';
 const Login = () => {
   const history = useHistory();
 
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
-  const [studentObj, setStudentObj] = useState({});
+  const [studentObj, setStudentObj] = useState({
+    email: '',
+    password: '',
+  });
 
   const { email, password } = studentObj;
 
@@ -65,13 +65,15 @@ const Login = () => {
 
     const res = await loginStudent(studentObj);
 
-    console.log(res);
-    console.log(res.data.message);
+    // console.log(res);
+    // console.log(res.data.message);
 
     if (res.data.status === 422) {
-      window.alert('invaild cre');
+      setIsFormValid(true);
     } else {
-      history.push('/student-listing');
+      // history.push('/student-listing');
+      window.location.href = '/student-listing';
+      // console.log(document.cookie);
     }
   };
   return (
@@ -81,6 +83,11 @@ const Login = () => {
         <form onSubmit={onSubmitClick}>
           <div className="row">
             <div className="col-lg-6 offset-lg-3">
+              {isFormValid && (
+                <div className="alert alert-danger" role="alert">
+                  You entered an incorrect email / username or password.
+                </div>
+              )}
               <UserInputWrapped
                 label="Email address"
                 id="email"

@@ -6,6 +6,7 @@ import Login from './components/Login';
 import StudentListing from './components/StudentListing';
 import StudentCreate from './components/StudentCreate';
 import StudentUpdate from './components/StudentUpdate';
+import DepartmentListing from './components/departmentListing';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/student-listing" component={StudentListing} />
           <Route path="/student-create" component={StudentCreate} />
           <Route path="/student-update/:id" component={StudentUpdate} />
+          <Route path="/department-listing" component={DepartmentListing} />
           <Redirect to="/" />
         </Switch>
       </div>

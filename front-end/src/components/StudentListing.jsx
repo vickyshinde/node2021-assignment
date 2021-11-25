@@ -25,7 +25,7 @@ const StudentListing = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you wanted to delete the User')) {
+    if (window.confirm('Are you wanted to delete the student')) {
       await deleteStudent(id);
       getAllUsers();
     }
