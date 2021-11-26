@@ -249,7 +249,7 @@ const StudentCreate = () => {
   };
   return (
     <>
-      <Banner title="Student Add" />
+      <Banner title="Create Student" />
       <div className="container">
         <form onSubmit={onSubmitClick}>
           <div className="row">
@@ -365,7 +365,7 @@ const StudentCreate = () => {
                     title="< Back"
                     clsName="btn btn-outline-info mb-4"
                     onClick={() => {
-                      history.push('/user-listing');
+                      history.push('/student-listing');
                     }}
                   />
                 </div>

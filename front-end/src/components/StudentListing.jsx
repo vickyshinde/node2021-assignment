@@ -36,7 +36,7 @@ const StudentListing = () => {
       <Banner title="Student Listing" />
       <div className="container">
         <div>
-          <NavLink exact className="btn btn-outline-danger mb-4" to="/student-add">
+          <NavLink exact className="btn btn-outline-danger mb-4" to="/student-create">
             Create Student
           </NavLink>
         </div>
