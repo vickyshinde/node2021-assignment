@@ -9,7 +9,7 @@ const Header = () => {
 
   const onLoggedOut = () => {
     deleteSession();
-    window.location.href = '/login';
+    window.location.href = '/';
     // history.push('/login');
   };
 
@@ -19,7 +19,6 @@ const Header = () => {
         <NavLink to="/" className="navbar-brand">
           Assignment
         </NavLink>
-        <span className="navbar-text">Welcome user</span>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             {!isLoggedIn ? (
@@ -32,6 +31,9 @@ const Header = () => {
               </>
             ) : (
               <>
+                <li>
+                  <span className="navbar-text">Welcome user</span>
+                </li>
                 <li className="nav-item">
                   <NavLink exact to="/student-listing" className="nav-link" activeClassName="text-white">
                     Student Listing
