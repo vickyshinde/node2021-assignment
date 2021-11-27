@@ -20,9 +20,13 @@ exports.login = async (req, res, next) => {
         status: 422,
       });
     } else {
-      const theToken = jwt.sign({ id: row[0].id, userType: row[0].userType }, 'the-super-strong-secret-key', {
-        expiresIn: '1h',
-      });
+      const theToken = jwt.sign(
+        { id: row[0].id, userType: row[0].userType, fname: row[0].fname },
+        'the-super-strong-secret-key',
+        {
+          expiresIn: '1h',
+        }
+      );
       res.cookie('token', theToken, {
         expires: new Date(Date.now() + 12000000),
         // httpOnly: true,

@@ -5,7 +5,7 @@ class StudentModel {
   static getAll() {
     // let sql = 'SELECT * from Student';
     let sql = `SELECT Student.id, Student.role, Student.id, Student.fname, Student.lname, Student.email, Student.password, Student.city, Student.contact, DepartmentStudent.DeptId AS DeptId, Department.name AS Deptname FROM Student JOIN DepartmentStudent
-    ON (Student.id=DepartmentStudent.StudId) JOIN Department ON (Department.id=DepartmentStudent.DeptId);`;
+    ON (Student.id=DepartmentStudent.StudId) JOIN Department ON (Department.id=DepartmentStudent.DeptId) WHERE Student.userType != 1;`;
     // return db.execute(sql);
     let result = db.execute(sql);
     result.then(function (data) {

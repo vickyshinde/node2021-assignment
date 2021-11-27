@@ -5,17 +5,22 @@ import Loading from './shared/Loading';
 import { getStudents, deleteStudent } from '../config/api-endpoints';
 import SubmitButtonWrapped from './shared/SubmitButton';
 import Banner from './shared/Banner';
+import { getUserType, isAuthenticated } from '../utility/comman-methods';
 
 const StudentListing = () => {
+  const isLoggedIn = isAuthenticated();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isLoggedUser, SetIsLoggedUser] = useState({});
+
+  useEffect(() => {}, []);
 
   const history = useHistory();
 
   const getAllUsers = async () => {
     const response = await getStudents();
     // console.log(response.data);
-    // debugger;
+    SetIsLoggedUser(getUserType(isLoggedIn));
     setUsers(response.data);
     setLoading(false);
   };
@@ -35,11 +40,13 @@ const StudentListing = () => {
     <>
       <Banner title="Student Listing" />
       <div className="container">
-        <div>
-          <NavLink exact className="btn btn-outline-danger mb-4" to="/student-create">
-            Create Student
-          </NavLink>
-        </div>
+        {isLoggedUser.userType === 1 && (
+          <div>
+            <NavLink exact className="btn btn-outline-danger mb-4" to="/student-create">
+              Create Student
+            </NavLink>
+          </div>
+        )}
         {loading ? (
           <Loading />
         ) : (
@@ -56,9 +63,11 @@ const StudentListing = () => {
                 </th>
                 <th scope="col">City</th>
                 <th scope="col">Contact</th>
-                <th scope="col" className="text-right">
-                  Action
-                </th>
+                {isLoggedUser.userType === 1 && (
+                  <th scope="col" className="text-right">
+                    Action
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -75,22 +84,24 @@ const StudentListing = () => {
                     <td className="d-none">{item.password}</td>
                     <td>{item.city}</td>
                     <td>{item.contact}</td>
-                    <td className="text-right">
-                      <SubmitButtonWrapped
-                        // disabled={!isDisabled}
-                        title="Update"
-                        clsName="btn btn-outline-success btn-sm ml-1"
-                        onClick={() => {
-                          history.push(`/student-update/${item.id}`);
-                        }}
-                      />
-                      <SubmitButtonWrapped
-                        // disabled={!isDisabled}
-                        title="Delete"
-                        clsName="btn btn-outline-warning btn-sm ml-1"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                    </td>
+                    {isLoggedUser.userType === 1 && (
+                      <td className="text-right">
+                        <SubmitButtonWrapped
+                          // disabled={!isDisabled}
+                          title="Update"
+                          clsName="btn btn-outline-success btn-sm ml-1"
+                          onClick={() => {
+                            history.push(`/student-update/${item.id}`);
+                          }}
+                        />
+                        <SubmitButtonWrapped
+                          // disabled={!isDisabled}
+                          title="Delete"
+                          clsName="btn btn-outline-warning btn-sm ml-1"
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </td>
+                    )}
                   </tr>
                 );
               })}

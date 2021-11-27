@@ -106,8 +106,6 @@ JOIN Department
 
 
 
-
-
 /* db.query(
   `INSERT INTO Student (role, fname, lname, email, password, city, contact, userType) value (?,?,?,?,?,?,?,?)`,
   [role, fname, lname, email, password, city, contact, userType],

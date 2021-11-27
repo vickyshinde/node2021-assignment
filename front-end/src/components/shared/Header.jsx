@@ -1,11 +1,17 @@
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { deleteSession, isAuthenticated } from '../../utility/comman-methods';
+import { deleteSession, getUserType, isAuthenticated } from '../../utility/comman-methods';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
   const history = useHistory();
   const isLoggedIn = isAuthenticated();
-  console.log(isLoggedIn);
+
+  const [isLoggedUser, SetIsLoggedUser] = useState({});
+
+  useEffect(() => {
+    SetIsLoggedUser(getUserType(isLoggedIn));
+  }, []);
 
   const onLoggedOut = () => {
     deleteSession();
@@ -32,18 +38,20 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <span className="navbar-text">Welcome user</span>
+                  <span className="navbar-text">Welcome {isLoggedUser.fname}</span>
                 </li>
                 <li className="nav-item">
                   <NavLink exact to="/student-listing" className="nav-link" activeClassName="text-white">
                     Student Listing
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink exact to="/student-create" className="nav-link" activeClassName="text-white">
-                    Student Create
-                  </NavLink>
-                </li>
+                {isLoggedUser.userType === 1 && (
+                  <li className="nav-item">
+                    <NavLink exact to="/student-create" className="nav-link" activeClassName="text-white">
+                      Student Create
+                    </NavLink>
+                  </li>
+                )}
                 <li className="nav-item">
                   <NavLink exact to="/department-listing" className="nav-link" activeClassName="text-white">
                     Department Listing

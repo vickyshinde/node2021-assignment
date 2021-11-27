@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 const appConstants = {
   AUTH_TOKEN: 'token',
 };
@@ -28,4 +30,14 @@ const getCookie = (name) => {
   }
 
   return decodeURI(dc.substring(begin + prefix.length, end));
+};
+
+export const getUserType = (req, res) => {
+  try {
+    var decoded = jwt.verify(req, 'the-super-strong-secret-key');
+    // console.log(decoded);
+    return decoded;
+  } catch (e) {
+    return;
+  }
 };
