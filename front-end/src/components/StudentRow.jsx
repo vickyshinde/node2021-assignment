@@ -1,7 +1,7 @@
 import SubmitButtonWrapped from './shared/SubmitButton';
 import { useHistory } from 'react-router';
 
-const StudentList = ({ users, isLoggedUser, handleDelete }) => {
+const StudentList = ({ users, isLoggedUser, handleDelete, sorting }) => {
   const history = useHistory();
   // console.log(users.length);
   // console.log(users);
@@ -9,16 +9,30 @@ const StudentList = ({ users, isLoggedUser, handleDelete }) => {
     <table className="table table-bordered">
       <thead>
         <tr className="table-info">
-          <th scope="col">Sid</th>
-          <th scope="col">Deptname</th>
-          <th scope="col">Role No</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
+          <th scope="col" className="sort" onClick={() => sorting('id')}>
+            Sid
+          </th>
+          <th scope="col" className="sort" onClick={() => sorting('Deptname')}>
+            Deptname
+          </th>
+          <th scope="col" className="sort" onClick={() => sorting('role')}>
+            Role No
+          </th>
+          <th scope="col" className="sort" onClick={() => sorting('fname')}>
+            Name
+          </th>
+          <th scope="col" className="sort" onClick={() => sorting('email')}>
+            Email
+          </th>
           <th className="d-none" scope="col">
             Password
           </th>
-          <th scope="col">City</th>
-          <th scope="col">Contact</th>
+          <th scope="col" className="sort" onClick={() => sorting('city')}>
+            City
+          </th>
+          <th scope="col" className="sort" onClick={() => sorting('contact')}>
+            Contact
+          </th>
           {isLoggedUser.userType === 1 && (
             <th scope="col" className="text-right">
               Action

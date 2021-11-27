@@ -82,6 +82,26 @@ const StudentListing = () => {
     setUsers(updatedItem);
   };
 
+  // sort
+  const [order, setOrder] = useState('ASC');
+
+  const sorting = (col) => {
+    if (order === 'ASC') {
+      const sorted = [...users].sort((a, b) =>
+        a[col].toString().toLowerCase() > b[col].toString().toLowerCase() ? 1 : -1
+      );
+      setUsers(sorted);
+      setOrder('DSC');
+    }
+    if (order === 'DSC') {
+      const sorted = [...users].sort((a, b) =>
+        a[col].toString().toLowerCase() < b[col].toString().toLowerCase() ? 1 : -1
+      );
+      setUsers(sorted);
+      setOrder('ASC');
+    }
+  };
+
   return (
     <>
       <Banner title="Student Listing" />
@@ -136,6 +156,7 @@ const StudentListing = () => {
               users={searchInput.length < 1 ? users : filteredResults}
               isLoggedUser={isLoggedUser}
               handleDelete={handleDelete}
+              sorting={sorting}
             />
           </>
         )}
