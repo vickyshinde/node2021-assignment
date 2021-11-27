@@ -67,10 +67,11 @@ const StudentListing = () => {
   const [filterUsers, setFilterUsers] = useState([]);
 
   const filterList = (filterWithDept) => {
-    console.log(filterWithDept);
+    // console.log(filterWithDept);
     if (filterWithDept === 'all') {
       setFilterActiveTab('all');
       setUsers(filterUsers);
+      // console.log(users);
       return;
     }
 
@@ -102,7 +103,7 @@ const StudentListing = () => {
                   Filter by Department -
                   <span
                     onClick={() => filterList('all')}
-                    className={`btn btn-primary ${'all' === filterActiveTab ? 'btn-success' : 'false'}`}>
+                    className={`btn btn-outline-info ${'all' === filterActiveTab ? 'btn-outline-danger' : 'false'}`}>
                     All{' '}
                   </span>
                   {department.map((item) => {
@@ -110,7 +111,9 @@ const StudentListing = () => {
                       <span
                         key={item.id}
                         onClick={() => filterList(item.name)}
-                        className={`btn btn-primary ${item.name === filterActiveTab ? 'btn-success' : 'false'}`}>
+                        className={`btn btn-outline-info ${
+                          item.name === filterActiveTab ? 'btn-outline-danger' : 'false'
+                        }`}>
                         {item.name}{' '}
                       </span>
                     );
