@@ -12,7 +12,6 @@ const initialValues = {
   email: '',
   contact: '',
   city: '',
-  password: '',
   DeptId: '',
 };
 
@@ -25,7 +24,7 @@ const StudentUpdate = () => {
 
   const [department, setDepartment] = useState([]);
 
-  const { fname, lname, role, email, contact, city, password, DeptId } = studentObj;
+  const { fname, lname, role, email, contact, city, DeptId } = studentObj;
 
   const [isInputValid, setIsInputValid] = useState({
     isfNameValid: false,
@@ -208,28 +207,6 @@ const StudentUpdate = () => {
       email: email,
     });
   };
-  const onPasswordChange = (password) => {
-    var validPass = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password);
-    if (validPass) {
-      setIsInputValid({
-        ...isInputValid,
-        isPasswordValid: false,
-      });
-      setIsDisabled(
-        (isfNameValid, islNameValid, isRoleValid, isCityValid, isEmailValid, isContactValid, isPasswordValid)
-      );
-    } else {
-      setIsInputValid({
-        ...isInputValid,
-        isPasswordValid: true,
-      });
-      setIsDisabled(false);
-    }
-    setStudentObj({
-      ...studentObj,
-      password: password,
-    });
-  };
 
   const onDeptIdChange = (DeptId) => {
     setStudentObj({
@@ -342,18 +319,6 @@ const StudentUpdate = () => {
                 onChange={onContactChange}
                 val={contact}
               />
-              {/* <UserInputWrapped
-                label="Password"
-                id="password"
-                name="password"
-                type="password"
-                clsName="form-control"
-                placeholder="Enter password"
-                errorMsg={'Please enter min 8 character, least one digit, one lowercase, one uppercase'}
-                isValid={isPasswordValid}
-                onChange={onPasswordChange}
-                val={password}
-              /> */}
               <UserInputWrapped
                 selectList={department}
                 label="Deptname"

@@ -1,17 +1,15 @@
-import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { deleteSession, getUserType, isAuthenticated } from '../../utility/comman-methods';
 import { useEffect, useState } from 'react';
 
 const Header = () => {
-  const history = useHistory();
   const isLoggedIn = isAuthenticated();
 
   const [isLoggedUser, SetIsLoggedUser] = useState({});
 
   useEffect(() => {
     SetIsLoggedUser(getUserType(isLoggedIn));
-  }, []);
+  }, [isLoggedIn]);
 
   const onLoggedOut = () => {
     deleteSession();
@@ -25,6 +23,11 @@ const Header = () => {
         <NavLink to="/" className="navbar-brand">
           Assignment
         </NavLink>
+        {isLoggedIn && (
+          <span className="navbar-text">
+            Welcome <b>{isLoggedUser.fname}</b>
+          </span>
+        )}
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             {!isLoggedIn ? (
@@ -37,9 +40,6 @@ const Header = () => {
               </>
             ) : (
               <>
-                <li>
-                  <span className="navbar-text">Welcome {isLoggedUser.fname}</span>
-                </li>
                 <li className="nav-item">
                   <NavLink exact to="/student-listing" className="nav-link" activeClassName="text-white">
                     Student Listing
