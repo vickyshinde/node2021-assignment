@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Loading from './shared/Loading';
-import { getStudents, deleteStudent } from '../config/api-endpoints';
+import { getStudents, deleteStudent, getDepartment } from '../config/api-endpoints';
 
 import Banner from './shared/Banner';
 import { getUserType, isAuthenticated } from '../utility/comman-methods';
@@ -14,16 +14,26 @@ const StudentListing = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isLoggedUser, setIsLoggedUser] = useState({});
+  const [department, setDepartment] = useState([]);
 
   const getAllUsers = async () => {
     const response = await getStudents();
     // console.log(response.data);
     setIsLoggedUser(getUserType(isLoggedIn));
     setUsers(response.data);
+    setFilterUsers(response.data);
+    setLoading(false);
+  };
+
+  const getAllDepartment = async () => {
+    const response = await getDepartment();
+    // console.log(response.data);
+    setDepartment(response.data);
     setLoading(false);
   };
 
   useEffect(() => {
+    getAllDepartment();
     getAllUsers();
   }, []);
 
@@ -45,11 +55,30 @@ const StudentListing = () => {
       const filteredData = users.filter((item) => {
         return Object.values(item).join('').toLowerCase().includes(searchInput.toLowerCase());
       });
-      console.log(filteredData);
+      // console.log(filteredData);
       setFilteredResults(filteredData);
     } else {
       setFilteredResults(users);
     }
+  };
+
+  // filter
+  const [filterActiveTab, setFilterActiveTab] = useState('all');
+  const [filterUsers, setFilterUsers] = useState([]);
+
+  const filterList = (filterWithDept) => {
+    console.log(filterWithDept);
+    if (filterWithDept === 'all') {
+      setFilterActiveTab('all');
+      setUsers(filterUsers);
+      return;
+    }
+
+    const updatedItem = filterUsers.filter((item) => {
+      return item.Deptname === filterWithDept;
+    });
+    setFilterActiveTab(filterWithDept);
+    setUsers(updatedItem);
   };
 
   return (
@@ -69,7 +98,24 @@ const StudentListing = () => {
           <>
             <div className="d-flex justify-content-between">
               <div>
-                <p className="d-none">Filter by Department - All, abc, abc</p>
+                <p>
+                  Filter by Department -
+                  <span
+                    onClick={() => filterList('all')}
+                    className={`btn btn-primary ${'all' === filterActiveTab ? 'btn-success' : 'false'}`}>
+                    All{' '}
+                  </span>
+                  {department.map((item) => {
+                    return (
+                      <span
+                        key={item.id}
+                        onClick={() => filterList(item.name)}
+                        className={`btn btn-primary ${item.name === filterActiveTab ? 'btn-success' : 'false'}`}>
+                        {item.name}{' '}
+                      </span>
+                    );
+                  })}
+                </p>
               </div>
               <div>
                 <UserInputWrapped

@@ -3,8 +3,8 @@ import { useHistory } from 'react-router';
 
 const StudentList = ({ users, isLoggedUser, handleDelete }) => {
   const history = useHistory();
-  console.log(users.length);
-  console.log(users);
+  // console.log(users.length);
+  // console.log(users);
   return (
     <table className="table table-bordered">
       <thead>
