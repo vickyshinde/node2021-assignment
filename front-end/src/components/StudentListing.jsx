@@ -83,34 +83,11 @@ const StudentListing = () => {
                 />
               </div>
             </div>
-            <table className="table table-bordered">
-              <thead>
-                <tr className="table-info">
-                  <th scope="col">Sid</th>
-                  <th scope="col">Deptname</th>
-                  <th scope="col">Role No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th className="d-none" scope="col">
-                    Password
-                  </th>
-                  <th scope="col">City</th>
-                  <th scope="col">Contact</th>
-                  {isLoggedUser.userType === 1 && (
-                    <th scope="col" className="text-right">
-                      Action
-                    </th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                <StudentList
-                  users={searchInput.length < 1 ? users : filteredResults}
-                  isLoggedUser={isLoggedUser}
-                  handleDelete={handleDelete}
-                />
-              </tbody>
-            </table>
+            <StudentList
+              users={searchInput.length < 1 ? users : filteredResults}
+              isLoggedUser={isLoggedUser}
+              handleDelete={handleDelete}
+            />
           </>
         )}
       </div>
