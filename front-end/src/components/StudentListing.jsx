@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+
 import Loading from './shared/Loading';
 import { getStudents, deleteStudent } from '../config/api-endpoints';
-import SubmitButtonWrapped from './shared/SubmitButton';
+
 import Banner from './shared/Banner';
 import { getUserType, isAuthenticated } from '../utility/comman-methods';
 import UserInputWrapped from './shared/UserInput';
+import StudentList from './StudentRow';
 
 const StudentListing = () => {
   const isLoggedIn = isAuthenticated();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isLoggedUser, setIsLoggedUser] = useState({});
-
-  const history = useHistory();
 
   const getAllUsers = async () => {
     const response = await getStudents();
@@ -105,84 +104,11 @@ const StudentListing = () => {
                 </tr>
               </thead>
               <tbody>
-                {searchInput.length > 1 ? (
-                  <>
-                    {filteredResults.map((item) => {
-                      return (
-                        <tr key={item.id}>
-                          <th scope="row">{item.id}</th>
-                          <td>{item.Deptname}</td>
-                          <th scope="row">{item.role}</th>
-                          <td>
-                            {item.fname} {item.lname}
-                          </td>
-                          <td>{item.email}</td>
-                          <td className="d-none">{item.password}</td>
-                          <td>{item.city}</td>
-                          <td>{item.contact}</td>
-                          {isLoggedUser.userType === 1 && (
-                            <td className="text-right">
-                              <SubmitButtonWrapped
-                                // disabled={!isDisabled}
-                                title="Update"
-                                clsName="btn btn-outline-success btn-sm ml-1"
-                                onClick={() => {
-                                  history.push(`/student-update/${item.id}`);
-                                }}
-                              />
-                              <SubmitButtonWrapped
-                                // disabled={!isDisabled}
-                                title="Delete"
-                                clsName="btn btn-outline-warning btn-sm ml-1"
-                                onClick={() => handleDelete(item.id)}
-                              />
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    })}
-                    {!filteredResults.length && (
-                      <tr>
-                        <td colSpan="8">not found</td>
-                      </tr>
-                    )}
-                  </>
-                ) : (
-                  users.map((item) => {
-                    return (
-                      <tr key={item.id}>
-                        <th scope="row">{item.id}</th>
-                        <td>{item.Deptname}</td>
-                        <th scope="row">{item.role}</th>
-                        <td>
-                          {item.fname} {item.lname}
-                        </td>
-                        <td>{item.email}</td>
-                        <td className="d-none">{item.password}</td>
-                        <td>{item.city}</td>
-                        <td>{item.contact}</td>
-                        {isLoggedUser.userType === 1 && (
-                          <td className="text-right">
-                            <SubmitButtonWrapped
-                              // disabled={!isDisabled}
-                              title="Update"
-                              clsName="btn btn-outline-success btn-sm ml-1"
-                              onClick={() => {
-                                history.push(`/student-update/${item.id}`);
-                              }}
-                            />
-                            <SubmitButtonWrapped
-                              // disabled={!isDisabled}
-                              title="Delete"
-                              clsName="btn btn-outline-warning btn-sm ml-1"
-                              onClick={() => handleDelete(item.id)}
-                            />
-                          </td>
-                        )}
-                      </tr>
-                    );
-                  })
-                )}
+                <StudentList
+                  users={searchInput.length < 1 ? users : filteredResults}
+                  isLoggedUser={isLoggedUser}
+                  handleDelete={handleDelete}
+                />
               </tbody>
             </table>
           </>
