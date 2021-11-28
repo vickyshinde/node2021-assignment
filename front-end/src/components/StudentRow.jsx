@@ -1,7 +1,7 @@
 import SubmitButtonWrapped from './shared/SubmitButton';
 import { useHistory } from 'react-router';
 
-const StudentList = ({ users, isLoggedUser, handleDelete, sorting }) => {
+const StudentList = ({ users, isLoggedUser, handleDelete, sorting, orderActiveCol, orderActive }) => {
   const history = useHistory();
   // console.log(users.length);
   // console.log(users);
@@ -9,28 +9,49 @@ const StudentList = ({ users, isLoggedUser, handleDelete, sorting }) => {
     <table className="table table-bordered">
       <thead>
         <tr className="table-info">
-          <th scope="col" className="sort" onClick={() => sorting('id')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'id' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('id')}>
             Sid
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('Deptname')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'Deptname' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('Deptname')}>
             Deptname
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('role')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'role' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('role')}>
             Role No
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('fname')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'fname' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('fname')}>
             Name
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('email')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'email' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('email')}>
             Email
           </th>
           <th className="d-none" scope="col">
             Password
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('city')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'city' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('city')}>
             City
           </th>
-          <th scope="col" className="sort" onClick={() => sorting('contact')}>
+          <th
+            scope="col"
+            className={`sort ${orderActiveCol === 'contact' ? `active${orderActive}` : ''}`}
+            onClick={() => sorting('contact')}>
             Contact
           </th>
           {isLoggedUser.userType === 1 && (

@@ -37,4 +37,24 @@
 
 .sort {
   cursor: pointer;
+  background-image: url('/images/sort_both.png');
+  background-repeat: no-repeat;
+  background-position: center right;
+  // svg {
+  //   float: right;
+  // }
+  &.activeASC {
+    color: #000;
+    background-image: url('/images/sort_asc.png');
+    // svg {
+    //   transform: rotate(180deg);
+    // }
+  }
+  &.activeDSC {
+    background-image: url('/images/sort_desc.png');
+    color: #000;
+    // svg {
+    //   transform: rotate(0);
+    // }
+  }
 }
