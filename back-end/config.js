@@ -1,11 +1,13 @@
+const dotenv = require('dotenv').config();
+
 const env = process.env;
 
 const config = {
   db: {
-    host: env.DB_HOST || 'localhost',
-    user: env.DB_USER || 'root',
-    password: env.DB_PASSWORD || 'webonise123#',
-    database: env.name || 'collageDB',
+    host: env.DB_HOST || 'host',
+    user: env.DB_USER || 'user',
+    password: env.DB_PASSWORD || 'password',
+    database: env.DB_NAME || 'database',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,

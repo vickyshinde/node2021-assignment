@@ -167,7 +167,6 @@ const StudentListing = () => {
               handleDelete={handleDelete}
               sorting={sorting}
             />
-            {orderActiveCol}
           </>
         )}
       </div>

@@ -22,9 +22,9 @@ exports.login = async (req, res, next) => {
     } else {
       const theToken = jwt.sign(
         { id: row[0].id, userType: row[0].userType, fname: row[0].fname },
-        'the-super-strong-secret-key',
+        process.env.TOKEN_SECRET,
         {
-          expiresIn: '1h',
+          expiresIn: '12h',
         }
       );
       res.cookie('token', theToken, {

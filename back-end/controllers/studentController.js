@@ -4,6 +4,10 @@ exports.getAllStudents = async (req, res, next) => {
   try {
     const [students, _] = await StudentModel.getAll();
     res.json(students);
+    // return res.json({
+    //   message: 'get all student list',
+    //   students,
+    // });
   } catch (error) {
     console.log(error);
     next(error);
